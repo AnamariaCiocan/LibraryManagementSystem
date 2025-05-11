@@ -21,7 +21,7 @@ public class BorrowService
     {
           Book book = bookRepo.findOneByTitleAndAuthor(nameBook, authorBook);
           if (book != null)
-          {
+          {   lendBook(nameBook,authorBook); 
               Person person = personRepo.findOneByPhone(phone);
               if (person == null)
               {
@@ -40,7 +40,7 @@ public class BorrowService
               borrow.setDueDate(dueDate);
               borrow.setUserId(personRepo.findOneByPhone(person.getPhone()).getId());
               borrow.setBookId(book.getId());
-              lendBook(nameBook,authorBook);      
+                   
               borrowRepo.save(borrow);
           }
           else
@@ -53,7 +53,7 @@ public class BorrowService
     {
         Book book = bookRepo.findOneByTitleAndAuthor(nameBook, authorBook);
         if (book != null)
-        {
+        {returnBook(nameBook,authorBook);
             Person person = personRepo.findOneByPhone(phone);
             if (person == null)
             {
@@ -64,9 +64,9 @@ public class BorrowService
                 Borrow borrow = borrowRepo.findOneByBookAndPerson(book.getId(), person.getId());
                 if ( borrow == null)
                 {
-                   throw new Exception("Borrow doesn't exists");
+                   throw new Exception("The stock is already full!");
                 }
-                returnBook(nameBook,authorBook);
+                
                 borrowRepo.delete(borrow.getId());
             }
         }
