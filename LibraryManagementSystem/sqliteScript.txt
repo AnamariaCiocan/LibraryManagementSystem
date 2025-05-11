@@ -1,0 +1,28 @@
+create table Book(
+    id integer primary key autoincrement,
+    title varchar(50) not null,
+    author varchar(50) not null,
+    genre varchar(20) not null,
+    quantity integer,
+    currentQuantity integer
+);
+create table Person(
+    id integer primary key autoincrement,
+    name varchar(30) not null,
+    phone varchar(10) not null unique
+    );
+create table Borrow(
+    id integer primary key autoincrement,
+    borrowDate Date not null,
+    dueDate Date not null,
+    idBook integer not null,
+    idPerson integer not null,
+    foreign key (idBook) references Book(id),
+    foreign key (idPerson) references Person(id)
+);
+create table Review(
+    id integer primary key autoincrement,
+    idBook int,
+    rating float not null,
+    foreign key (idBook) references Book(id)
+);
